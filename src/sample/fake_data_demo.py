@@ -1,3 +1,5 @@
+## https://zetcode.com/python/faker/
+
 from faker import Faker
 
 fake: Faker = Faker()

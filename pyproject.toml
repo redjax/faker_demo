@@ -10,6 +10,10 @@ dependencies = [
     "pydantic>=2.5.2",
     "polars-lts-cpu>=0.20.1",
     "pyarrow>=14.0.2",
+    "red-utils>=0.2.15",
+    "loguru>=0.7.2",
+    "msgpack>=1.0.7",
+    "sqlalchemy>=2.0.23",
 ]
 requires-python = ">=3.11"
 readme = "README.md"
