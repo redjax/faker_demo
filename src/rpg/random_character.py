@@ -12,11 +12,8 @@ from domain.item_container import Inventory, new_inventory
 from domain.character import Character
 
 
-fake: Faker = Faker()
-
-
-def generate_random_character() -> Character:
-    name = fake.word()
+def generate_random_character(fake: Faker = None) -> Character:
+    name = fake.first_name()
     character_class = random.choice(["Warrior", "Mage", "Rogue"])
     description = fake.sentence()
     health: int = random.randint(30, 100)
@@ -29,7 +26,7 @@ def generate_random_character() -> Character:
     )
 
 
-def generate_random_potion() -> Potion:
+def generate_random_potion(fake: Faker = None) -> Potion:
     name = fake.word()
     description = fake.sentence()
     healing = random.randint(10, 30)
@@ -37,7 +34,7 @@ def generate_random_potion() -> Potion:
     return Potion(name=name, description=description, healing=healing)
 
 
-def generate_random_coin() -> Coin:
+def generate_random_coin(fake: Faker = None) -> Coin:
     name = fake.word()
     description = fake.sentence()
     value = random.randint(1, 10)
@@ -46,12 +43,14 @@ def generate_random_coin() -> Coin:
 
 
 def main():
-    hero = generate_random_character()
-    villain = generate_random_character()
+    fake: Faker = Faker()
 
-    health_potion = generate_random_potion()
-    mana_potion = generate_random_potion()
-    gold_coin = generate_random_coin()
+    hero = generate_random_character(fake)
+    villain = generate_random_character(fake)
+
+    health_potion = generate_random_potion(fake)
+    mana_potion = generate_random_potion(fake)
+    gold_coin = generate_random_coin(fake)
 
     hero.inventory.add_item(health_potion)
     hero.inventory.add_item(gold_coin)
