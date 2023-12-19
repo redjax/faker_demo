@@ -55,7 +55,7 @@ for _ in range(5):
             "{{pybool}}",
             "{{country_calling_code}}{{msisdn}}",
             "{{language_name}}",
-            "{{passport_dob}}",
+            "{{date_of_birth}}",
             "{{emoji}}",
             "{{company}}",
         ),
@@ -63,7 +63,7 @@ for _ in range(5):
         include_row_ids=False,
     )
 
-    with open(f"test-fake.csv", "a+") as f:
+    with open("test-fake.csv", "a+") as f:
         f.write(_data)
 
 df = pl.read_csv("test-fake.csv", use_pyarrow=True)
