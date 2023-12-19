@@ -1,4 +1,4 @@
-from domain.item_container import Inventory
+from rpg.domain.item_container import Inventory
 
 
 def new_inventory() -> "Inventory":

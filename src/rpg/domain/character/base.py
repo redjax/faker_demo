@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field, field_validator, ValidationError
 
-from domain.item_container import Inventory, new_inventory
+from rpg.domain.item_container import Inventory, new_inventory
 
 
 class CharacterBase(BaseModel):
