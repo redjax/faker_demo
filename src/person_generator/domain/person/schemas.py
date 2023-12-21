@@ -10,6 +10,7 @@ class Person(BaseModel):
     last_name: str = Field(default=None)
     dob: pendulum.Date = Field(default=None)
     email: str = Field(default=None)
+    phone: str = Field(default=None)
 
     class Config:
         arbitrary_types_allowed = True
