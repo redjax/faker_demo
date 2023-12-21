@@ -6,12 +6,12 @@ from uuid import UUID
 from person_generator.constants import (
     CSV_DTYPES_MAP,
     DF_DTYPES_MAP,
-    RAW_PQ_PEOPLE_FILE,
     RAW_CSV_PEOPLE_FILE,
+    RAW_PQ_PEOPLE_FILE,
 )
-from domain.person import Person
 
-from core.constants import DATA_DIR, RAW_DIR, OUTPUT_DIR
+from core.constants import DATA_DIR, OUTPUT_DIR, RAW_DIR
+from domain.person import Person
 from loguru import logger as log
 import polars as pl
 
