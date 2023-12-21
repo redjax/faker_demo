@@ -17,9 +17,10 @@ def generate_random_person(fake: Faker = None) -> Person:
 
         person.first_name = fake.first_name()
         person.last_name = fake.last_name()
-        person.dob = fake.date_of_birth(minimum_age=13, maximum_age=75)
+        person.dob = fake.date_of_birth(minimum_age=1, maximum_age=110)
         person.email = f"{fake.user_name()}@{fake.free_email_domain()}"
         person.phone = fake.phone_number()
+        person.job = fake.job()
 
         return person
 
