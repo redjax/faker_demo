@@ -21,6 +21,31 @@ from core.constants import DATA_DIR, RAW_DIR, OUTPUT_DIR, OUTPUT_PQ_DIR, OUTPUT_
 import polars as pl
 
 
+def df_dedupe(df: pl.DataFrame = None, subset: list[str] = []) -> pl.DataFrame:
+    """Drop duplicate records in a DataFrame."""
+    if df is None or df.is_empty():
+        raise ValueError("Missing a DataFrame to deduplicate.")
+    if subset is None or not subset:
+        log.warning(
+            f"Subset is empty, but must contain at least one row. Setting subset to ['id']"
+        )
+        subset = ["id"]
+
+    log.info(f"Deduplicating DataFrame. Original shape: {df.shape}")
+
+    try:
+        _dedupe = df.unique(subset=subset)
+
+        log.info(f"DataFrame duplicates removed. Deduplicated shape: {_dedupe.shape}")
+
+        return _dedupe
+    except Exception as exc:
+        msg = Exception(f"Unhandled exception deduplicating DataFrame. Details: {exc}")
+        log.error(msg)
+
+        raise msg
+
+
 def get_rand_list_index(lst: list = None) -> int:
     """Return a random index by using random.randint(0, len(lst) - 1)."""
     if lst is None or len(lst) == 0:
@@ -66,6 +91,9 @@ def run_cleaning_operations():
 
     csv_df: pl.DataFrame = preload_dfs[0]
     pq_df: pl.DataFrame = preload_dfs[1]
+
+    csv_df = df_dedupe(df=csv_df)
+    pq_df = df_dedupe(df=pq_df)
 
     with SimpleSpinner(f"Converting [{pq_df.shape[0]}] row(s) to dict(s)... "):
         person_dicts: list[dict] = pq_df.to_dicts()
