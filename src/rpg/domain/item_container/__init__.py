@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from .base import InventoryBase
-from .schemas import Inventory
 from .methods import new_inventory
+from .schemas import Inventory

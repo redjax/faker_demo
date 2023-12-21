@@ -1,25 +1,26 @@
+from __future__ import annotations
+
 import sys
 
 sys.path.append(".")
 
 from pathlib import Path
 
+from person_generator.constants import CSV_DTYPES_MAP
+from person_generator.domain.person import (
+    Person,
+    generate_people,
+    generate_random_person,
+)
+from person_generator.utils.df_utils import append_people_to_csv
+
+from core.constants import DATA_DIR, OUTPUT_CSV_DIR, OUTPUT_DIR, OUTPUT_PQ_DIR, RAW_DIR
+from core.dependencies import DEFAULT_FAKER, new_faker
 from faker import Faker
 from loguru import logger as log
 import polars as pl
-
-from red_utils.ext.loguru_utils import init_logger, LoguruSinkStdOut
 from red_utils.ext.context_managers import SimpleSpinner
-
-from core.constants import DATA_DIR, RAW_DIR, OUTPUT_DIR, OUTPUT_PQ_DIR, OUTPUT_CSV_DIR
-from core.dependencies import new_faker, DEFAULT_FAKER
-from person_generator.domain.person import (
-    Person,
-    generate_random_person,
-    generate_people,
-)
-from person_generator.constants import CSV_DTYPES_MAP
-from person_generator.utils.df_utils import append_people_to_csv
+from red_utils.ext.loguru_utils import LoguruSinkStdOut, init_logger
 
 
 def generate_main(

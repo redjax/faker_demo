@@ -1,6 +1,8 @@
-from pydantic import BaseModel, Field, field_validator, ValidationError
+from __future__ import annotations
 
 from rpg.domain.item_container import Inventory, new_inventory
+
+from pydantic import BaseModel, Field, ValidationError, field_validator
 
 
 class CharacterBase(BaseModel):

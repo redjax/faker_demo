@@ -1,7 +1,9 @@
-import random
-from faker import Faker
-from faker.providers import DynamicProvider, BaseProvider
+from __future__ import annotations
 
+import random
+
+from faker import Faker
+from faker.providers import BaseProvider, DynamicProvider
 import polars as pl
 
 

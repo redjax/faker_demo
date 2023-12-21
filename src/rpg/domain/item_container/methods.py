@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from rpg.domain.item_container import Inventory
 
 

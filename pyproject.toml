@@ -2,9 +2,7 @@
 name = ""
 version = ""
 description = ""
-authors = [
-    {name = "redjax", email = "none@none.com"},
-]
+authors = [{ name = "redjax", email = "none@none.com" }]
 dependencies = [
     "Faker>=21.0.0",
     "pydantic>=2.5.2",
@@ -17,5 +15,31 @@ dependencies = [
 ]
 requires-python = ">=3.11"
 readme = "README.md"
-license = {text = "MIT"}
+license = { text = "MIT" }
 
+[tool.pdm.dev-dependencies]
+dev = ["black>=23.12.0", "ruff>=0.1.8", "pytest>=7.4.3"]
+
+[tool.pdm.scripts]
+
+###############
+# Format/Lint #
+###############
+
+# Lint with black & ruff
+lint = { shell = "pdm run ruff check . --fix && pdm run black ." }
+# Check only, don't fix
+check = { cmd = "black ." }
+# Check and fix
+format = { cmd = "ruff check . --fix" }
+
+######################
+# Export Requirement #
+######################
+
+#  Export production requirements
+export = { cmd = "pdm export --prod -o requirements.txt --without-hashes" }
+#  Export only development requirements
+export-dev = { cmd = "pdm export -d -o requirements.dev.txt --without-hashes" }
+## Uncomment if/when using a CI group
+# export-ci = { cmd = "pdm export -G ci -o requirements.ci.txt --without-hashes" }
