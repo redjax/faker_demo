@@ -1,24 +1,23 @@
+from __future__ import annotations
+
 import sys
 
 sys.path.append(".")
 
 import random
 
-from loguru import logger as log
-from red_utils.ext.loguru_utils import init_logger, LoguruSinkStdOut
-from red_utils.ext.context_managers import SimpleSpinner
-
+from core.constants import DATA_DIR, OUTPUT_CSV_DIR, OUTPUT_DIR, OUTPUT_PQ_DIR, RAW_DIR
 from domain.person import Person, generate_random_person
+from loguru import logger as log
 from person_generator.constants import (
+    CSV_DTYPES_MAP,
+    DF_DTYPES_MAP,
     RAW_CSV_PEOPLE_FILE,
     RAW_PQ_PEOPLE_FILE,
-    DF_DTYPES_MAP,
-    CSV_DTYPES_MAP,
 )
-
-from core.constants import DATA_DIR, RAW_DIR, OUTPUT_DIR, OUTPUT_PQ_DIR, OUTPUT_CSV_DIR
-
 import polars as pl
+from red_utils.ext.context_managers import SimpleSpinner
+from red_utils.ext.loguru_utils import LoguruSinkStdOut, init_logger
 
 
 def df_dedupe(df: pl.DataFrame = None, subset: list[str] = []) -> pl.DataFrame:

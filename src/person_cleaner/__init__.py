@@ -1,6 +1,8 @@
+from __future__ import annotations
+
 from .main import (
-    run_cleaning_operations,
+    convert_dicts_to_people,
     get_rand_list_index,
     load_existing_people_from_files,
-    convert_dicts_to_people,
+    run_cleaning_operations,
 )

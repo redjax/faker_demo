@@ -7,11 +7,6 @@ sys.path.append(".")
 from pathlib import Path
 
 from person_generator.constants import CSV_DTYPES_MAP
-from domain.person import (
-    Person,
-    generate_people,
-    generate_random_person,
-)
 from person_generator.utils.df_utils import (
     append_people_to_csv,
     append_people_to_parquet,
@@ -20,6 +15,11 @@ from person_generator.utils.df_utils import (
 
 from core.constants import DATA_DIR, OUTPUT_CSV_DIR, OUTPUT_DIR, OUTPUT_PQ_DIR, RAW_DIR
 from core.dependencies import DEFAULT_FAKER, new_faker
+from domain.person import (
+    Person,
+    generate_people,
+    generate_random_person,
+)
 from faker import Faker
 from loguru import logger as log
 import polars as pl

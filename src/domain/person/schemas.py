@@ -1,8 +1,8 @@
 from __future__ import annotations
 
+import datetime
 from typing import Union
 from uuid import UUID, uuid4
-import datetime
 
 from loguru import logger as log
 import pendulum
