@@ -15,7 +15,7 @@ from red_utils.ext.loguru_utils import LoguruSinkStdOut, init_logger
 DBG_SKIP_PROMPTS: bool = True
 
 DEFAULT_SEED = None
-DEFAULT_COUNT = 100
+DEFAULT_COUNT = 1000
 SAVE_CSV: bool = True
 
 
