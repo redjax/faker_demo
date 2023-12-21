@@ -7,7 +7,7 @@ sys.path.append(".")
 from pathlib import Path
 
 from person_generator.constants import CSV_DTYPES_MAP
-from person_generator.domain.person import (
+from domain.person import (
     Person,
     generate_people,
     generate_random_person,
@@ -46,8 +46,8 @@ def generate_main(
 
     use_spinner: bool = False
 
-    log.info(f"Generating {num_people} Person object(s)")
-    people = generate_people(fake=fake, num=num_people)
+    with SimpleSpinner(f"Generating {num_people} Person object(s)..."):
+        people = generate_people(fake=fake, num=num_people)
 
     if len(people) > 20000:
         use_spinner = True

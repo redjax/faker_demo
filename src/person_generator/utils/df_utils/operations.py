@@ -3,16 +3,21 @@ from __future__ import annotations
 from pathlib import Path
 from uuid import UUID
 
-from person_generator.constants import CSV_DTYPES_MAP, DF_DTYPES_MAP
-from person_generator.domain.person import Person
+from person_generator.constants import (
+    CSV_DTYPES_MAP,
+    DF_DTYPES_MAP,
+    RAW_PQ_PEOPLE_FILE,
+    RAW_CSV_PEOPLE_FILE,
+)
+from domain.person import Person
 
-from core.constants import DATA_DIR, RAW_DIR
+from core.constants import DATA_DIR, RAW_DIR, OUTPUT_DIR
 from loguru import logger as log
 import polars as pl
 
 
 def append_people_to_csv(
-    people: list[Person] = None, output_file: Path = Path(f"{RAW_DIR}/people.csv")
+    people: list[Person] = None, output_file: Path = RAW_CSV_PEOPLE_FILE
 ) -> bool:
     """Loop over a list of Person instances, convert to DataFrame, & write to a CSV file.
 
@@ -96,7 +101,7 @@ def append_people_to_csv(
 
 
 def append_people_to_parquet(
-    people: list[Person] = None, output_file: Path = Path(f"{RAW_DIR}/people.parquet")
+    people: list[Person] = None, output_file: Path = RAW_PQ_PEOPLE_FILE
 ) -> bool:
     """Loop over a list of Person instances, convert to DataFrame, & write to a Parquet file.
 
@@ -180,8 +185,8 @@ def append_people_to_parquet(
 
 
 def convert_pq_to_csv(
-    input_pq: Path = Path(f"{RAW_DIR}/people.parquet"),
-    output_csv: Path = Path(f"{RAW_DIR}/people.csv"),
+    input_pq: Path = RAW_PQ_PEOPLE_FILE,
+    output_csv: Path = RAW_CSV_PEOPLE_FILE,
 ):
     """Load a Parquet file and save it as a CSV file."""
     if not input_pq:
