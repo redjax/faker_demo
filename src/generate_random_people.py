@@ -15,7 +15,7 @@ from person_generator.main import generate_main
 DBG_SKIP_PROMPTS: bool = True
 
 DEFAULT_SEED = None
-DEFAULT_COUNT = 5000
+DEFAULT_COUNT = 100
 
 
 if __name__ == "__main__":
@@ -73,7 +73,7 @@ if __name__ == "__main__":
     fake: Faker = new_faker(seed=faker_seed)
 
     if skip_prompts:
-        num: int = 50
+        num: int = DEFAULT_COUNT
 
     else:
         prompt_num = input("How many Person objects do you want to generate? ")

@@ -25,6 +25,14 @@ def generate_random_person(fake: Faker = None) -> Person:
         person.phone = fake.phone_number()
         person.job = fake.job()
         person.company = fake.company()
+        person.license = fake.license_plate()
+        person.vin = fake.vin()
+        person.addr_housenum = int(fake.building_number())
+        person.addr_street = fake.street_address()
+        person.addr_city = fake.city()
+        person.addr_state = fake.country_code()
+        person.addr_zip = str(fake.postcode())
+        person.addr_country = fake.country()
 
         return person
 

@@ -2,7 +2,7 @@ from pathlib import Path
 from loguru import logger as log
 
 from person_generator.domain.person import Person
-from person_generator.constants import CSV_DTYPES_MAP
+from person_generator.constants import CSV_DTYPES_MAP, DF_DTYPES_MAP
 
 from core.constants import DATA_DIR, RAW_DIR
 
@@ -51,9 +51,7 @@ def append_people_to_csv(
             f"Output already exists: {output_file}. Loading to a DataFrame to concat new data"
         )
         try:
-            existing_data: pl.DataFrame = pl.read_csv(
-                output_file, dtypes=CSV_DTYPES_MAP
-            )
+            existing_data: pl.DataFrame = pl.read_csv(output_file, dtypes=DF_DTYPES_MAP)
         except Exception as exc:
             raise Exception(
                 f"Unhandled exception reading CSV data in path '{output_file}' to DataFrame. Details: {exc}"

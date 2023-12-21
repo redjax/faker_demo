@@ -15,6 +15,14 @@ class Person(BaseModel):
     phone: str = Field(default=None)
     job: str = Field(default=None)
     company: str = Field(default=None)
+    license: str = Field(default=None)
+    vin: str = Field(default=None)
+    addr_housenum: str = Field(default=None)
+    addr_street: str = Field(default=None)
+    addr_city: str = Field(default=None)
+    addr_state: str = Field(default=None)
+    addr_zip: str = Field(default=None)
+    addr_country: str = Field(default=None)
 
     class Config:
         arbitrary_types_allowed = True
