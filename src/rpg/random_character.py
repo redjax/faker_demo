@@ -4,12 +4,13 @@ import sys
 
 sys.path.append(".")
 
-from faker import Faker
 import random
 
-from rpg.domain.item import Item, Potion, Coin
-from rpg.domain.item_container import Inventory, new_inventory
 from rpg.domain.character import Character
+from rpg.domain.item import Coin, Item, Potion
+from rpg.domain.item_container import Inventory, new_inventory
+
+from faker import Faker
 
 
 def generate_random_character(fake: Faker = None) -> Character:

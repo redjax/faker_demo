@@ -1,9 +1,11 @@
-from typing import Union
-from pydantic import BaseModel, Field, field_validator, ValidationError
-from loguru import logger as log
+from __future__ import annotations
 
-import pendulum
+from typing import Union
 from uuid import UUID, uuid4
+
+from loguru import logger as log
+import pendulum
+from pydantic import BaseModel, Field, ValidationError, field_validator
 
 
 class Person(BaseModel):

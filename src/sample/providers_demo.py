@@ -1,6 +1,8 @@
+from __future__ import annotations
+
+from dateutil.relativedelta import relativedelta
 from faker import Faker
 import polars as pl
-from dateutil.relativedelta import relativedelta
 
 fake = Faker()
 

@@ -1,13 +1,13 @@
-from faker import Faker
-
-from core.validators.faker_validators import validate_faker
-from .schemas import Person
-
-from red_utils.ext.context_managers import SimpleSpinner
-
-from loguru import logger as log
+from __future__ import annotations
 
 from uuid import uuid4
+
+from .schemas import Person
+
+from core.validators.faker_validators import validate_faker
+from faker import Faker
+from loguru import logger as log
+from red_utils.ext.context_managers import SimpleSpinner
 
 
 def generate_random_person(fake: Faker = None) -> Person:

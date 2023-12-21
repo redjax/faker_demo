@@ -1,13 +1,14 @@
-from pathlib import Path
-from loguru import logger as log
+from __future__ import annotations
 
-from person_generator.domain.person import Person
+from pathlib import Path
+from uuid import UUID
+
 from person_generator.constants import CSV_DTYPES_MAP, DF_DTYPES_MAP
+from person_generator.domain.person import Person
 
 from core.constants import DATA_DIR, RAW_DIR
-
+from loguru import logger as log
 import polars as pl
-from uuid import UUID
 
 
 def append_people_to_csv(

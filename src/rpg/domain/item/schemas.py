@@ -1,6 +1,8 @@
-from pydantic import BaseModel, Field, field_validator, ValidationError
+from __future__ import annotations
 
 from .base import ItemBase
+
+from pydantic import BaseModel, Field, ValidationError, field_validator
 
 
 class Item(ItemBase):

@@ -1,15 +1,15 @@
+from __future__ import annotations
+
 import sys
 
 sys.path.append(".")
 
-from core.constants import DATA_DIR, RAW_DIR, OUTPUT_DIR, OUTPUT_PQ_DIR, OUTPUT_CSV_DIR
+from core.constants import DATA_DIR, OUTPUT_CSV_DIR, OUTPUT_DIR, OUTPUT_PQ_DIR, RAW_DIR
 from core.dependencies import new_faker
-
 from faker import Faker
 from loguru import logger as log
-from red_utils.ext.loguru_utils import init_logger, LoguruSinkStdOut
-
 from person_generator.main import generate_main
+from red_utils.ext.loguru_utils import LoguruSinkStdOut, init_logger
 
 ## Skip all prompts while debugging
 DBG_SKIP_PROMPTS: bool = True
