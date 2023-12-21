@@ -2,11 +2,12 @@ from pathlib import Path
 from loguru import logger as log
 
 from person_generator.domain.person import Person
-from person_generator.constants import DF_DTYPES_MAP
+from person_generator.constants import CSV_DTYPES_MAP
 
 from core.constants import DATA_DIR, RAW_DIR
 
 import polars as pl
+from uuid import UUID
 
 
 def append_people_to_csv(
@@ -26,7 +27,7 @@ def append_people_to_csv(
     for p in people:
         try:
             p_df = pl.DataFrame(p.model_dump())
-            p_df = p_df.with_columns(new_col=pl.lit(p.age, dtype=pl.Int64))
+            p_df = p_df.with_columns(age=pl.lit(p.age, dtype=pl.Int64))
             # log.debug(f"Person DataFrame:\n{p_df}")
             people_dfs.append(p_df)
 
@@ -40,12 +41,19 @@ def append_people_to_csv(
     except Exception as exc:
         raise Exception(f"Unhandled exception joining DataFrames. Details: {exc}")
 
+    log.debug(f"DF cols: {df.columns}")
+    log.debug(f"DF shape: {df.shape}")
+    log.debug(f"DF dtypes: {df.dtypes}")
+    log.debug(f"DF head(5):\n{df.head(5)}")
+
     if output_file.exists():
         log.warning(
             f"Output already exists: {output_file}. Loading to a DataFrame to concat new data"
         )
         try:
-            existing_data: pl.DataFrame = pl.read_csv(output_file, dtypes=DF_DTYPES_MAP)
+            existing_data: pl.DataFrame = pl.read_csv(
+                output_file, dtypes=CSV_DTYPES_MAP
+            )
         except Exception as exc:
             raise Exception(
                 f"Unhandled exception reading CSV data in path '{output_file}' to DataFrame. Details: {exc}"
@@ -53,10 +61,15 @@ def append_people_to_csv(
 
         log.debug(f"Loaded [{existing_data.shape[0]}] existing Person row[s].")
 
+        log.debug(f"Existing data DF cols: {existing_data.columns}")
+        log.debug(f"Existing data DF shape: {existing_data.shape}")
+        log.debug(f"Existing data DF dtypes: {existing_data.dtypes}")
+        log.debug(f"Existing data DF head(5):\n{existing_data.head(5)}")
+
     else:
         existing_data = None
 
-    if existing_data is not None:
+    if existing_data is not None and not existing_data.is_empty():
         pre_merge_count: int = df.shape[0]
         try:
             df: pl.DataFrame = pl.concat([df, existing_data])
@@ -71,6 +84,8 @@ def append_people_to_csv(
 
     log.info(f"Saving DataFrame to {output_file}")
     try:
+        # csv_df = df.with_columns([pl.col("id").cast(str).alias("id_str")])
+
         df.write_csv(file=output_file)
 
         return True

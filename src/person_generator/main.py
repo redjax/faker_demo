@@ -18,7 +18,7 @@ from person_generator.domain.person import (
     generate_random_person,
     generate_people,
 )
-from person_generator.constants import DF_DTYPES_MAP
+from person_generator.constants import CSV_DTYPES_MAP
 from person_generator.utils.df_utils import append_people_to_csv
 
 

@@ -7,6 +7,8 @@ from red_utils.ext.context_managers import SimpleSpinner
 
 from loguru import logger as log
 
+from uuid import uuid4
+
 
 def generate_random_person(fake: Faker = None) -> Person:
     """Generate fake data with Faker and populate a Person object."""
@@ -15,12 +17,14 @@ def generate_random_person(fake: Faker = None) -> Person:
     try:
         person = Person()
 
+        person.id = str(uuid4())
         person.first_name = fake.first_name()
         person.last_name = fake.last_name()
         person.dob = fake.date_of_birth(minimum_age=1, maximum_age=110)
         person.email = f"{fake.user_name()}@{fake.free_email_domain()}"
         person.phone = fake.phone_number()
         person.job = fake.job()
+        person.company = fake.company()
 
         return person
 

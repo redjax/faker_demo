@@ -11,32 +11,39 @@ from red_utils.ext.loguru_utils import init_logger, LoguruSinkStdOut
 
 from person_generator.main import generate_main
 
+## Skip all prompts while debugging
+DBG_SKIP_PROMPTS: bool = True
+
 DEFAULT_SEED = None
-DEFAULT_COUNT = 50
+DEFAULT_COUNT = 5000
+
 
 if __name__ == "__main__":
     init_logger(sinks=[LoguruSinkStdOut(level="DEBUG").as_dict()])
     log.info(f"Starting random Person generator")
 
-    prompt_use_defaults: str = input(
-        f"Defaults: [seed: {DEFAULT_SEED}], [person_count: {DEFAULT_COUNT}]\n\t| Skip prompts and use defaults? (Y/N) default=N : "
-    )
+    if DBG_SKIP_PROMPTS:
+        skip_prompts = True
+    else:
+        prompt_use_defaults: str = input(
+            f"Defaults: [seed: {DEFAULT_SEED}], [person_count: {DEFAULT_COUNT}]\n\t| Skip prompts and use defaults? (Y/N) default=N : "
+        )
 
-    match prompt_use_defaults.upper():
-        case "Y":
-            log.info("Setting skip_prompts=True")
-            skip_prompts: bool = True
-        case "N":
-            log.info("Setting skip_prompts=False")
-            skip_prompts: bool = False
-        case ["", None]:
-            log.warning("Your answer was empty, setting skip_prompts=False")
-            skip_prompts = False
-        case _:
-            log.error(
-                f"Invalid choice: [{prompt_use_defaults}], settings skip_prompts=False"
-            )
-            skip_prompts: bool = False
+        match prompt_use_defaults.upper():
+            case "Y":
+                log.info("Setting skip_prompts=True")
+                skip_prompts: bool = True
+            case "N":
+                log.info("Setting skip_prompts=False")
+                skip_prompts: bool = False
+            case ["", None]:
+                log.warning("Your answer was empty, setting skip_prompts=False")
+                skip_prompts = False
+            case _:
+                log.error(
+                    f"Invalid choice: [{prompt_use_defaults}], settings skip_prompts=False"
+                )
+                skip_prompts: bool = False
 
     log.info(f"Creating Faker object")
 
