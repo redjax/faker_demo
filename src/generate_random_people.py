@@ -16,6 +16,7 @@ DBG_SKIP_PROMPTS: bool = True
 
 DEFAULT_SEED = None
 DEFAULT_COUNT = 100
+SAVE_CSV: bool = True
 
 
 if __name__ == "__main__":
@@ -85,4 +86,4 @@ if __name__ == "__main__":
             )
 
     log.info(f"Generating {num} Person objects!")
-    people = generate_main(fake=fake, num_people=num)
+    people = generate_main(fake=fake, num_people=num, save_csv=SAVE_CSV)
