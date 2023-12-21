@@ -22,7 +22,7 @@ from person_generator.constants import DF_DTYPES_MAP
 from person_generator.utils.df_utils import append_people_to_csv
 
 
-def main(
+def generate_main(
     fake: Faker = None,
     num_people: int = 3,
     csv_output_path: Path = Path(f"{RAW_DIR}/people.csv"),
@@ -62,4 +62,4 @@ if __name__ == "__main__":
     ## Same data each time
     fake_static = new_faker(seed=142356893021)
 
-    main(fake, num_people=50000)
+    people = generate_main(fake, num_people=500)
