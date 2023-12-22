@@ -5,6 +5,7 @@ import sys
 sys.path.append(".")
 
 import random
+from pathlib import Path
 
 from core.constants import DATA_DIR, OUTPUT_CSV_DIR, OUTPUT_DIR, OUTPUT_PQ_DIR, RAW_DIR
 from domain.person import Person, generate_random_person
@@ -15,6 +16,7 @@ from person_generator.constants import (
     RAW_CSV_PEOPLE_FILE,
     RAW_PQ_PEOPLE_FILE,
 )
+from person_cleaner.constants import CLEANED_PQ_FILE, CLEANED_CSV_FILE
 import polars as pl
 from red_utils.ext.context_managers import SimpleSpinner
 from red_utils.ext.loguru_utils import LoguruSinkStdOut, init_logger
@@ -84,7 +86,7 @@ def convert_dicts_to_people(dicts: list[dict] = []) -> list[Person]:
     return people
 
 
-def run_cleaning_operations():
+def run_cleaning_operations(save_csv: bool = False):
     with SimpleSpinner("Loading existing data from files into DataFrames... "):
         preload_dfs: tuple[pl.DataFrame] = load_existing_people_from_files()
 
@@ -113,6 +115,40 @@ def run_cleaning_operations():
     log.debug(
         f"Sample Person (index: [{person_sample_index}]): {people[person_sample_index]}"
     )
+
+    cleaned_df: pl.DataFrame = pq_df
+    cleaned_df = cleaned_df.with_columns(
+        pl.col("age").cast(pl.Int32),
+        pl.col("dob").cast(pl.Date),
+        pl.col("addr_zip").cast(pl.Int32),
+        pl.col("addr_housenum").cast(pl.Int32),
+    )
+    log.debug(f"Cleaned DF preview:\n{cleaned_df.head(5)}")
+    log.debug(f"Cleaned DF dtypes:\n{cleaned_df.dtypes}")
+
+    log.info(f"Outputting cleaned_df to {CLEANED_PQ_FILE}")
+
+    try:
+        cleaned_df.write_parquet(file=CLEANED_PQ_FILE, use_pyarrow=True)
+    except Exception as exc:
+        msg = Exception(
+            f"Unhandled exception saving cleaned DataFrame to path: '{CLEANED_PQ_FILE}'. Details: {exc}"
+        )
+        log.error(msg)
+
+        raise msg
+
+    if save_csv:
+        log.info(f"save_csv=True, saving cleaned DataFrame to {CLEANED_CSV_FILE}")
+        try:
+            cleaned_df.write_csv(file=CLEANED_CSV_FILE)
+        except Exception as exc:
+            msg = Exception(
+                f"Unhandled exception saving cleaned DataFrame to path: '{CLEANED_CSV_FILE}'. Details: {exc}"
+            )
+            log.error(msg)
+
+            raise msg
 
 
 if __name__ == "__main__":
