@@ -6,13 +6,10 @@ sys.path.append(".")
 
 from core.constants import DATA_DIR, OUTPUT_CSV_DIR, OUTPUT_DIR, OUTPUT_PQ_DIR, RAW_DIR
 from core.dependencies import new_faker
-from person_generator.main import generate_main
-from person_cleaner import CLEANED_CSV_FILE, CLEANED_PQ_FILE
-from person_cleaner import run_cleaning_operations
-
 from faker import Faker
 from loguru import logger as log
-
+from person_cleaner import CLEANED_CSV_FILE, CLEANED_PQ_FILE, run_cleaning_operations
+from person_generator.main import generate_main
 from red_utils.ext.loguru_utils import LoguruSinkStdOut, init_logger
 
 ## Skip all prompts while debugging

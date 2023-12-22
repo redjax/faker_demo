@@ -4,8 +4,10 @@ import sys
 
 sys.path.append(".")
 
-import random
 from pathlib import Path
+import random
+
+from person_cleaner.constants import CLEANED_CSV_FILE, CLEANED_PQ_FILE
 
 from core.constants import DATA_DIR, OUTPUT_CSV_DIR, OUTPUT_DIR, OUTPUT_PQ_DIR, RAW_DIR
 from domain.person import Person, generate_random_person
@@ -16,7 +18,6 @@ from person_generator.constants import (
     RAW_CSV_PEOPLE_FILE,
     RAW_PQ_PEOPLE_FILE,
 )
-from person_cleaner.constants import CLEANED_PQ_FILE, CLEANED_CSV_FILE
 import polars as pl
 from red_utils.ext.context_managers import SimpleSpinner
 from red_utils.ext.loguru_utils import LoguruSinkStdOut, init_logger
